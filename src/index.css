@@ -1,3 +1,10 @@
+@import '~antd/dist/antd.css';
+@import "./sytles/Header.css";
+@import "./sytles/Main.css";
+@import "./sytles/Footer.css";
+@import "./App.css";
+@import "./sytles/SatSetting.css";
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
