@@ -34,7 +34,6 @@ class WorldMap extends Component {
             .translate([width / 2, height / 2])
             .precision(.1);
 
-        const graticule = geoGraticule();
 
         const canvas = d3Select(this.refMap.current)
             .attr("width", width)
@@ -55,21 +54,17 @@ class WorldMap extends Component {
             path(ele);
             context.fill();
             context.stroke();
-
-            // draw the graticule
-            context.strokeStyle = 'rgba(220, 220, 220, 0.1)';
-            context.beginPath();
-            path(graticule());
-            context.lineWidth = 0.1;
-            context.stroke();
-
-
-            // draw the graticule outline
-            context.beginPath();
-            context.lineWidth = 0.5;
-            path(graticule.outline());
-            context.stroke();
         })
+
+        // draw the graticule and outline
+        const graticule = geoGraticule();
+        context.strokeStyle = 'rgba(220, 220, 220, 1';
+        context.beginPath();
+        context.lineWidth = 1;
+        path(graticule());
+        path(graticule.outline());
+        context.stroke();
+
     }
 
     render() {
