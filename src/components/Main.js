@@ -3,6 +3,7 @@ import SatSetting from './SatSetting';
 import SatelliteList from './SatelliteList';
 import { NEARBY_SATELLITE, STARLINK_CATEGORY, SAT_API_KEY } from '../constants';
 import Axios from 'axios';
+import WorldMap from './WorldMap';
 
 class Main extends Component {
 
@@ -10,11 +11,35 @@ class Main extends Component {
         super();
         this.state = {
             loading : false,
+            selected : [],
         }
       }
   
 
+      trackOnClick = () => {
+        console.log(`tracking ${this.state.selected}`);
+      }
+  
+      addOrRemove = (item, status) => {
+        let list = this.state.selected;
+        const found = list.some( entry => entry.satid === item.satid);
 
+        
+        if(status && !found){
+            list.push(item)
+        }
+  
+        if(!status && found){
+            list = list.filter( entry => entry.satid !== item.satid);
+        }
+        
+        console.log("current selected list" , list);
+        this.setState({
+          selected: list
+        })
+      }
+
+      
     showNearbySatellite = (setting) => {
         console.log("in main.js" , setting)
         this.fetchSatellite(setting);
@@ -29,6 +54,7 @@ class Main extends Component {
                 this.setState({
                     satInfo: response.data,
                     loading: false,
+                    selected: []
                 })
             })
             .catch(error => {
@@ -46,10 +72,16 @@ class Main extends Component {
             <div className='main'>
                 <div className="left-side">
                     <SatSetting onShow={this.showNearbySatellite} />
-                    <SatelliteList satInfo={this.state.satInfo} loading={this.state.loading}/>
+                    <SatelliteList 
+                        satInfo={this.state.satInfo} 
+                        loading={this.state.loading}
+                        onSelectionChange={this.addOrRemove}
+                        disableTrack={this.state.selected.length === 0}
+                        trackOnclick={this.trackOnClick}
+                        />
                 </div>
                 <div className="right-side">
-                    right
+                    <WorldMap />
                 </div>
             </div>
         );

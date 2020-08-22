@@ -3,12 +3,21 @@ import { List, Avatar, Button, Checkbox, Spin } from 'antd';
 import Satellite from "../assets/images/satellite.svg";
 
 class SatelliteList extends Component {
+    onChange = e => {
+        const { dataInfo, checked } = e.target;
+        this.props.onSelectionChange(dataInfo, checked);
+    }
     render() {
         const satList = this.props.satInfo ? this.props.satInfo.above : [];
         return (
             <div className="sat-list-box">
                 <Button className="sat-list-btn"
-                        size="large">Track on the map</Button>
+                    size="large"
+                    disabled={this.props.disableTrack}
+                    onClick={() => this.props.trackOnclick()}
+                >
+                    Track on the map
+                </Button>
                 <hr/>
                 {   
                     this.props.loading ? 
