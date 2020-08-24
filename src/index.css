@@ -5,6 +5,7 @@
 @import "./App.css";
 @import "./styles/SatSetting.css";
 @import "./styles/SatelliteList.css";
+@import "./styles/WordMap.css";
 
 body {
   margin: 0;
